@@ -10,6 +10,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Connect to DB on every request (for Vercel)
+app.use(async (req, res, next) => {
+    await connectDB();
+    next();
+});
+
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/sweets', require('./routes/sweetRoutes'));
 
