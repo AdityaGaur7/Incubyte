@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
+import { Api } from '../Api';
 
 const Dashboard = () => {
     const [sweets, setSweets] = useState([]);
@@ -23,7 +24,7 @@ const Dashboard = () => {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            const { data } = await axios.get('http://localhost:5000/api/sweets', config);
+            const { data } = await axios.get(`${Api}/api/sweets`, config);
             setSweets(data);
 
             // Extract unique categories
@@ -50,7 +51,7 @@ const Dashboard = () => {
             if (minPrice) queryParams.append('minPrice', minPrice);
             if (maxPrice) queryParams.append('maxPrice', maxPrice);
 
-            const { data } = await axios.get(`http://localhost:5000/api/sweets/search?${queryParams.toString()}`, config);
+            const { data } = await axios.get(`${Api}/api/sweets/search?${queryParams.toString()}`, config);
             setSweets(data);
         } catch (error) {
             console.error('Error searching sweets', error);
@@ -65,7 +66,7 @@ const Dashboard = () => {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            await axios.post(`http://localhost:5000/api/sweets/${id}/purchase`, {}, config);
+            await axios.post(`${Api}/api/sweets/${id}/purchase`, {}, config);
             fetchSweets(); // Refresh list
             alert('Purchase successful!');
         } catch (error) {

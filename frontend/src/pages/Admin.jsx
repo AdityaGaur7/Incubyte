@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
+import { Api } from '../Api';
 
 const Admin = () => {
     const [sweets, setSweets] = useState([]);
@@ -27,7 +28,7 @@ const Admin = () => {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            const { data } = await axios.get('http://localhost:5000/api/sweets', config);
+            const { data } = await axios.get(`${Api}/api/sweets`, config);
             setSweets(data);
         } catch (error) {
             console.error('Error fetching sweets', error);
@@ -49,9 +50,9 @@ const Admin = () => {
             };
 
             if (editingId) {
-                await axios.put(`http://localhost:5000/api/sweets/${editingId}`, formData, config);
+                await axios.put(`${Api}/api/sweets/${editingId}`, formData, config);
             } else {
-                await axios.post('http://localhost:5000/api/sweets', formData, config);
+                await axios.post(`${Api}/api/sweets`, formData, config);
             }
 
             setFormData({ name: '', category: '', price: '', quantity: '', description: '', imageUrl: '' });
@@ -84,7 +85,7 @@ const Admin = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 };
-                await axios.delete(`http://localhost:5000/api/sweets/${id}`, config);
+                await axios.delete(`${Api}/api/sweets/${id}`, config);
                 fetchSweets();
             } catch (error) {
                 console.error('Error deleting sweet', error);
@@ -100,7 +101,7 @@ const Admin = () => {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            await axios.post(`http://localhost:5000/api/sweets/${id}/restock`, {}, config);
+            await axios.post(`${Api}/api/sweets/${id}/restock`, {}, config);
             fetchSweets();
         } catch (error) {
             console.error('Error restocking sweet', error);
