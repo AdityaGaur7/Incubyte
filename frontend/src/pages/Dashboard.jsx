@@ -118,17 +118,34 @@ const Dashboard = () => {
             <div className="sweets-grid">
                 {sweets.map((sweet) => (
                     <div key={sweet._id} className="sweet-card">
-                        <h3>{sweet.name}</h3>
-                        <p>Category: {sweet.category}</p>
-                        <p>Price: ${sweet.price}</p>
-                        <p>Stock: {sweet.quantity}</p>
-                        <button
-                            onClick={() => handlePurchase(sweet._id)}
-                            disabled={sweet.quantity === 0}
-                            className="btn-primary"
-                        >
-                            {sweet.quantity > 0 ? 'Purchase' : 'Out of Stock'}
-                        </button>
+                        <div className="sweet-image-container">
+                            <img
+                                src={sweet.imageUrl || 'https://placehold.co/400x300?text=No+Image'}
+                                alt={sweet.name}
+                                className="sweet-image"
+                                onError={(e) => { e.target.src = 'https://placehold.co/400x300?text=No+Image'; }}
+                            />
+                            {sweet.quantity === 0 && <div className="out-of-stock-overlay">Out of Stock</div>}
+                        </div>
+                        <div className="sweet-content">
+                            <div className="sweet-header">
+                                <h3>{sweet.name}</h3>
+                                <span className="sweet-price">${sweet.price}</span>
+                            </div>
+                            <span className="sweet-badge">{sweet.category}</span>
+                            <div className="sweet-footer">
+                                <span className="sweet-stock">
+                                    {sweet.quantity > 0 ? `${sweet.quantity} left` : 'Sold Out'}
+                                </span>
+                                <button
+                                    onClick={() => handlePurchase(sweet._id)}
+                                    disabled={sweet.quantity === 0}
+                                    className="btn-primary btn-full"
+                                >
+                                    {sweet.quantity > 0 ? 'Add to Cart' : 'Notify Me'}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>

@@ -108,71 +108,92 @@ const Admin = () => {
     };
 
     return (
-        <div className="admin-panel">
+        <div>
             <h1>Admin Dashboard</h1>
 
-            <div className="sweet-form">
-                <h2>{editingId ? 'Edit Sweet' : 'Add New Sweet'}</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label>Name</label>
-                        <input name="name" placeholder="e.g. Chocolate Cake" value={formData.name} onChange={handleChange} required />
-                    </div>
-                    <div className="form-group">
-                        <label>Category</label>
-                        <input placeholder="e.g. Cake" value={formData.category} onChange={handleChange} name="category" required />
-                    </div>
-                    <div className="form-group">
-                        <label>Price ($)</label>
-                        <input name="price" type="number" placeholder="0.00" value={formData.price} onChange={handleChange} required />
-                    </div>
-                    <div className="form-group">
-                        <label>Quantity</label>
-                        <input name="quantity" type="number" placeholder="0" value={formData.quantity} onChange={handleChange} required />
-                    </div>
-                    <div className="form-group">
-                        <label>Description</label>
-                        <input name="description" placeholder="Sweet description" value={formData.description} onChange={handleChange} />
-                    </div>
-                    <div className="form-group">
-                        <label>Image URL</label>
-                        <input name="imageUrl" placeholder="https://..." value={formData.imageUrl} onChange={handleChange} />
-                    </div>
-                    <div style={{ display: 'flex', gap: '1rem' }}>
-                        <button type="submit" className="btn-primary" style={{ flex: 1 }}>{editingId ? 'Update Sweet' : 'Add Sweet'}</button>
-                        {editingId && <button type="button" onClick={() => { setEditingId(null); setFormData({ name: '', category: '', price: '', quantity: '', description: '', imageUrl: '' }); }} className="btn-secondary" style={{ flex: 1 }}>Cancel</button>}
-                    </div>
-                </form>
-            </div>
 
-            <div className="sweets-list">
-                <h2>Manage Sweets</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sweets.map((sweet) => (
-                            <tr key={sweet._id}>
-                                <td>{sweet.name}</td>
-                                <td>{sweet.category}</td>
-                                <td>${sweet.price}</td>
-                                <td>{sweet.quantity}</td>
-                                <td>
-                                    <button onClick={() => handleRestock(sweet._id)} className="btn-small">Restock (+1)</button>
-                                    <button onClick={() => handleEdit(sweet)} className="btn-small">Edit</button>
-                                    <button onClick={() => handleDelete(sweet._id)} className="btn-small btn-danger">Delete</button>
-                                </td>
+
+            <div className="admin-panel">
+
+
+                <div className="sweets-list">
+                    <h2>Manage Sweets</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {sweets.map((sweet) => (
+                                <tr key={sweet._id}>
+                                    <td>
+                                        {sweet.imageUrl && (
+                                            <img src={sweet.imageUrl} alt={sweet.name} className="sweet-thumbnail" />
+                                        )}
+                                    </td>
+                                    <td>{sweet.name}</td>
+                                    <td>{sweet.category}</td>
+                                    <td>${sweet.price}</td>
+                                    <td>{sweet.quantity}</td>
+                                    <td>
+                                        <button onClick={() => handleRestock(sweet._id)} className="btn-small">Restock (+1)</button>
+                                        <button onClick={() => handleEdit(sweet)} className="btn-small">Edit</button>
+                                        <button onClick={() => handleDelete(sweet._id)} className="btn-small btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className="sweet-form">
+                    <h2>{editingId ? 'Edit Sweet' : 'Add New Sweet'}</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label>Name</label>
+                            <input name="name" placeholder="e.g. Chocolate Cake" value={formData.name} onChange={handleChange} required />
+                        </div>
+                        <div className="form-group">
+                            <label>Category</label>
+                            <input placeholder="e.g. Cake" value={formData.category} onChange={handleChange} name="category" required />
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label>Price ($)</label>
+                                <input name="price" type="number" placeholder="0.00" value={formData.price} onChange={handleChange} required />
+                            </div>
+                            <div className="form-group">
+                                <label>Quantity</label>
+                                <input name="quantity" type="number" placeholder="0" value={formData.quantity} onChange={handleChange} required />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label>Description</label>
+                            <input name="description" placeholder="Sweet description" value={formData.description} onChange={handleChange} />
+                        </div>
+                        <div className="form-group">
+                            <label>Image URL</label>
+                            <input name="imageUrl" placeholder="https://..." value={formData.imageUrl} onChange={handleChange} />
+                            {formData.imageUrl && (
+                                <div className="image-preview">
+                                    <img src={formData.imageUrl} alt="Preview" onError={(e) => e.target.style.display = 'none'} />
+                                </div>
+                            )}
+                        </div>
+                        <div style={{ display: 'flex', gap: '1rem' }}>
+                            <button type="submit" className="btn-primary" style={{ flex: 1 }}>{editingId ? 'Update Sweet' : 'Add Sweet'}</button>
+                            {editingId && <button type="button" onClick={() => { setEditingId(null); setFormData({ name: '', category: '', price: '', quantity: '', description: '', imageUrl: '' }); }} className="btn-secondary" style={{ flex: 1 }}>Cancel</button>}
+                        </div>
+                    </form>
+                </div>
+
+
             </div>
         </div>
     );
