@@ -36,3 +36,4 @@ I used an AI assistant (Google DeepMind's Antigravity) to co-author this project
 -   **Debugging**: Assisted in resolving gitignore issues and connecting frontend to backend.
 
 The AI significantly accelerated the development process by handling repetitive tasks and providing instant feedback on code structure.
+# Incubyte
