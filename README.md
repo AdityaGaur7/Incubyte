@@ -3,10 +3,15 @@
 A full-stack application for managing a sweet shop, built with the MERN stack (MongoDB, Express, React, Node.js).
 
 ## Features
-- User Authentication (JWT)
-- Browse and Search Sweets
-- Purchase Sweets (Inventory Management)
-- Admin Panel (Add, Edit, Delete, Restock Sweets)
+- **User Authentication**: Secure login and registration using JWT.
+- **Browse and Search**: Filter sweets by category, price range, and search by name.
+- **Premium UI**: Modern, responsive design with glassmorphism effects and smooth animations.
+- **Purchase System**: Real-time stock updates and purchase functionality.
+- **Admin Dashboard**: 
+    - Add, Edit, Delete sweets.
+    - Restock inventory.
+    - Image URL support with live previews.
+    - Visual management table with thumbnails.
 
 ## Setup Instructions
 
